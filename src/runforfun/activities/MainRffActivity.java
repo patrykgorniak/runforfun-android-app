@@ -9,7 +9,6 @@ public class MainRffActivity extends AbstractFragmentActivity {
 
 	@Override
 	protected Fragment createFragment() {
-		// TODO Auto-generated method stub
 		return new EventListFragment();
 	}
 }
