@@ -1,6 +1,8 @@
 package runforfun.data;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,24 +21,38 @@ import android.util.Log;
 
 public class Utils {
 	private static String tag = "RunForFun";
-	
+	public static Boolean debug = true;
+
 	public static StringBuilder readHttpData(String uri) {
-		HttpClient client = new DefaultHttpClient();
 		StringBuilder strBuilder = new StringBuilder();
+		BufferedReader reader = null;
+
 		try {
-			HttpResponse response = client.execute(new HttpGet(uri));
-			int status = response.getStatusLine().getStatusCode();
-			if(status == 200) {			
-				InputStream in = response.getEntity().getContent();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-				String line;
-				while((line=reader.readLine())!=null) {
-					strBuilder.append(line);
+			if(!debug) {
+				HttpClient client = new DefaultHttpClient();
+				HttpResponse response = client.execute(new HttpGet(uri));
+				int status = response.getStatusLine().getStatusCode();
+				if(status == 200) {
+					InputStream in = response.getEntity().getContent();
+					reader = new BufferedReader(new InputStreamReader(in));
+				}
+				else {
+					Log.e(tag, "Failed to download file via HTTP.");
 				}
 			}
-			else {
-				Log.e(tag, "Failed to download file via HTTP.");
+			else{
+				File file = new File(Environment.getExternalStorageDirectory(), "debug.txt");
+				FileInputStream in = new FileInputStream(file);
+				reader = new BufferedReader(new InputStreamReader(in));
 			}
+
+			String line;
+			while((line=reader.readLine())!=null) {
+				strBuilder.append(line);
+			}
+
+			reader.close();
+			
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,15 +62,13 @@ public class Utils {
 			e.printStackTrace();
 			Log.e(tag, "Failed to download file via HTTP.");
 		}
-		Log.i(tag, String.valueOf(strBuilder.capacity()));
-		
 		return strBuilder;
 	}
-	
+
 	public static void writeToExternalCard(String fileName, String data) {
-		
+
 		File file = new File(Environment.getExternalStorageDirectory(), fileName);
-		
+
 		try {
 			FileOutputStream os = new FileOutputStream(file);
 			os.write(data.getBytes());

@@ -1,6 +1,7 @@
 package runforfun.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,24 +23,12 @@ public class DataSportFetchr {
 //		this.mSession = mSession;
 //	}
 //	
-	public static ArrayList<Event> fetchEvents() {
-		ArrayList<Event> items = new ArrayList<Event>();
+	public static List<Event> fetchEvents() {
 		String data = Utils.readHttpData("http://rff.pgorniak.mydevil.net/rff/?action=get_events&service=datasport").toString();
-		Utils.writeToExternalCard("debug.txt", data);
+//		Utils.writeToExternalCard("debug.txt", data);
 		
 		Gson gson = new GsonBuilder().create();
 		EventListResponse p = gson.fromJson(data, EventListResponse.class);
-		Log.i(tag, p.getData().getListData().get(0).getName() );
-//	    try {
-//	        JSONObject jsonArray = new JSONObject(data);
-//	        Log.i("RunForFun", "Number of entries " + jsonArray.length());
-//	        for (int i = 0; i < jsonArray.length(); i++) {
-//	          JSONObject jsonObject = jsonArray.get;
-//	          Log.i("RunForFun", jsonObject.getString("text"));
-////	        }
-//	      } catch (Exception e) {
-//	        e.printStackTrace();
-//	      }
-		return items;
+		return p.getData();
 	}
 }

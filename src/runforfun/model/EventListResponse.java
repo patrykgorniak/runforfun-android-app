@@ -1,4 +1,5 @@
 package runforfun.model;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -7,33 +8,20 @@ public class EventListResponse {
 
 	@SerializedName("Status")
 	private String status;
-	
+
 	@SerializedName("Data")
-	private Data data;
+	private List<Event> mEvents = new ArrayList<Event>();
 	
 	
 	public EventListResponse() {
 		
 	}
 	
-	public Data getData() {
-		return data;
+	public List<Event> getData() {
+		return mEvents;
 	}
 
 	public String getStatus() {
 		return status;
-	}
-	
-	
-	public class Data {
-		private List<Event> listData;
-		
-		public Data(){
-			
-		}
-
-		public List<Event> getListData() {
-			return listData;
-		}
 	}
 }
