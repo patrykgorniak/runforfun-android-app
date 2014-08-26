@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import runforfun.data.*;
@@ -48,6 +49,10 @@ public class EventListFragment extends ListFragment {
 						.inflate(R.layout.list_item_event, null);	
 			}
 			Event mEvent = mEvents.get(position);
+			
+			ImageView icon = (ImageView)convertView.findViewById(R.id.list_item_event_icon);
+			icon.setImageResource(mEvent.getType().getSrc());
+			
 			TextView name = (TextView)convertView.findViewById(R.id.list_item_event_name);
 			name.setText(mEvent.getName());
 			TextView date = (TextView)convertView.findViewById(R.id.list_item_event_date);
@@ -62,7 +67,8 @@ public class EventListFragment extends ListFragment {
 	private class FetchItemsTask extends AsyncTask<Void, Void, List<Event>> {
 		@Override
 		protected List<Event> doInBackground(Void... params) {
-			return DataSportFetchr.fetchEvents();
+			DataSportFetchr dsFetch = new DataSportFetchr();
+			return dsFetch.fetchEvents();
 		}
 		
 		@Override
