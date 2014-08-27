@@ -30,8 +30,8 @@ public class DataSportFetchr {
 	//	}
 	//	
 	public List<Event> fetchEvents() {
-		String data = Utils.readHttpData("http://rff.pgorniak.mydevil.net/rff/?action=get_events&service=datasport").toString();
-		//		Utils.writeToExternalCard("debug.txt", data);
+		String data = Utils.readHttpData("http://rff.pgorniak.mydevil.net/rff/?action=get_events&service=datasport&date_from=2014-08-01").toString();
+//		Utils.writeToExternalCard("debug.txt", data);
 
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Event.EventType.class, new EventTypeDeserializer());
