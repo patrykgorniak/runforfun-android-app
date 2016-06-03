@@ -2,26 +2,27 @@ package runforfun.fragments;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import com.android.sport.runforfun.R;
 
-import android.location.Address;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import runforfun.activities.EventActivity;
 import runforfun.data.*;
 import runforfun.model.*;
 
 public class EventListFragment extends ListFragment {
-	private List<Event> mEvents;
 	private HashMap<Event.EventType, Integer> eventTypeToIconMap = new HashMap<Event.EventType, Integer>();
 
 	@Override
@@ -30,12 +31,21 @@ public class EventListFragment extends ListFragment {
 
 		init();
 		Log.d("RunForFun", "EventListFragment");
-		new FetchItemsTask().execute();
+		
+		if(EventsStorage.getEvents()==null) {
+			new FetchItemsTask().execute();
+		}
+		else {
+			setListAdapter(new EventAdapter(EventsStorage.getEvents()));
+		}
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-
+		UUID mEventId = EventsStorage.getEvent(position).getId();
+		Intent i = new Intent(getActivity(), EventActivity.class);
+		i.putExtra(EventFragment.EXTRA_EVENT_ID, mEventId);
+		startActivity(i);
 	}
 
 	private void init() {
@@ -60,7 +70,7 @@ public class EventListFragment extends ListFragment {
 				convertView = getActivity().getLayoutInflater()
 						.inflate(R.layout.list_item_event, null);	
 			}
-			Event mEvent = mEvents.get(position);
+			Event mEvent = EventsStorage.getEvent(position);
 			ImageView icon = (ImageView)convertView.findViewById(R.id.list_item_event_icon);
 			icon.setImageResource(eventTypeToIconMap.get(mEvent.getType()));
 			TextView name = (TextView)convertView.findViewById(R.id.list_item_event_name);
@@ -82,9 +92,9 @@ public class EventListFragment extends ListFragment {
 		}
 
 		@Override
-		protected void onPostExecute(List<Event> results) {
-			mEvents = results;
-			setListAdapter(new EventAdapter(results));
+		protected void onPostExecute(List<Event> events) {
+			EventsStorage.setEvents(events);
+			setListAdapter(new EventAdapter(EventsStorage.getEvents()));
 		}
 	}
 }

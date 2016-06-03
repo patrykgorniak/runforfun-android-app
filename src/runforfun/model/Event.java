@@ -1,25 +1,36 @@
 package runforfun.model;
 
-import com.android.sport.runforfun.R;
+import java.util.UUID;
+
+import com.google.gson.annotations.Expose;
 
 public class Event {
-	//	
-	//	public enum SportType {
-	//		RUNING
-	//	}
 
+	@Expose(deserialize = true)
 	private String location;
+	@Expose(deserialize = true)
 	private String website;
+	@Expose(deserialize = true)
 	private String results_page;
+	@Expose(deserialize = true)
 	private String name;
+	@Expose(deserialize = true)
 	private String date;
+	@Expose(deserialize = true)
 	private EventType type;
+	@Expose(deserialize = true)
 	private String entries;
 
-	public Event() {
+	private UUID id;
 
+	private Event() {
+		id = UUID.randomUUID();
 	}
-	//	
+	
+	public UUID getId() {
+		return id;
+	}
+
 	public String getLocation() {
 		return location;
 	}
@@ -51,20 +62,6 @@ public class Event {
 		}
 		public int getKey() {
 			return this.key;
-		}
-
-		public int getSrc() {
-			switch (key) {
-			case 0:
-				return R.drawable.run;
-			case 1:
-				return R.drawable.bicycle;
-			case 2:
-			case 3:
-			case 4:
-			default:
-				return R.drawable.ski;
-			}
 		}
 
 		public static EventType fromKey(int key) {

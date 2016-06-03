@@ -62,6 +62,11 @@ public class Utils {
 			e.printStackTrace();
 			Log.e(tag, "Failed to download file via HTTP.");
 		}
+		
+		if(!debug) {
+			Utils.writeToExternalCard("debug.txt", strBuilder.toString());
+		}
+			
 		return strBuilder;
 	}
 

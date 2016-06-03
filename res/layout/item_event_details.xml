@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/item_event_details_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/item_event_details_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical" >
+
+        <Button
+            android:id="@+id/item_event_details_entry"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="dupa4" />
+
+        <Button
+            android:id="@+id/item_event_details_results"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="dupa3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="center_horizontal|bottom">
+
+        <Button
+            android:id="@+id/item_event_details_site"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:height="150dp"
+            android:gravity="center"
+            android:text="dupa1" />
+
+        <Button
+            android:id="@+id/item_event_details_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:height="150dp"
+            android:gravity="center"
+            android:text="dupa2" />
+    </LinearLayout>
+
+</LinearLayout>

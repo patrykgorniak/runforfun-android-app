@@ -23,26 +23,16 @@ import runforfun.model.EventListResponse;
 public class DataSportFetchr {
 
 	private static String tag = "RunForFun";
-	//	private Session mSession;
-	//	
-	//	public DataSportFetchr(Session mSession) {
-	//		this.mSession = mSession;
-	//	}
-	//	
+
 	public List<Event> fetchEvents() {
 		String data = Utils.readHttpData("http://rff.pgorniak.mydevil.net/rff/?action=get_events&service=datasport&date_from=2014-08-01").toString();
-//		Utils.writeToExternalCard("debug.txt", data);
 
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Event.EventType.class, new EventTypeDeserializer());
-		Gson gson = gsonBuilder.create();
-		EventListResponse p = gson.fromJson(data, EventListResponse.class);
-		return p.getData();
+		Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+		EventListResponse mEvents = gson.fromJson(data, EventListResponse.class);
+		return mEvents.getEvents();
 	}
-
-
-
-
 
 
 

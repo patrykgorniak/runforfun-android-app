@@ -1,23 +1,23 @@
 package runforfun.model;
-import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class EventListResponse {
 
 	@SerializedName("Status")
-	private String status;
+	@Expose private String status;
 
 	@SerializedName("Data")
-	private List<Event> mEvents = new ArrayList<Event>();
+	@Expose private List<Event> mEvents;
 	
 	
 	public EventListResponse() {
 		
 	}
 	
-	public List<Event> getData() {
+	public List<Event> getEvents() {
 		return mEvents;
 	}
 
